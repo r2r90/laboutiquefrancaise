@@ -20,7 +20,7 @@
 <header data-bs-theme="dark">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">La Boutique Française</a>
+            <a class="navbar-brand" href="{{ path('app_home') }}">La Boutique Française</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -41,7 +41,12 @@
                     </li>
                 </ul>
                 <div class="speed-menu">
-                    <a href=""><i data-feather="user"></i></a>
+                    {% if app.user %}
+                        <a href="{{ path('app_account') }}"><i data-feather="user"></i>{{ app.user.firstname }}</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}"><i data-feather="user"></i></a>
+                    {% endif %}
+
                     <a href=""><i data-feather="shopping-cart"></i></a>
                 </div>
             </div>
@@ -51,7 +56,7 @@
 
 <main>
 
-   {% block body %} {% endblock %}
+    {% block body %} {% endblock %}
 
     <!-- FOOTER -->
     <footer class="container">
