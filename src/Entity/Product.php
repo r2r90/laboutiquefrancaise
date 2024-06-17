@@ -93,6 +93,12 @@ class Product
         return $this->price;
     }
 
+    public function getPriceWt()
+    {
+        $coeff = 1 + ($this->tva / 100);
+        return $coeff * $this->price;
+    }
+
     public function setPrice(float $price): static
     {
         $this->price = $price;
