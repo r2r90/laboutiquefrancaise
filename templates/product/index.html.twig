@@ -11,12 +11,17 @@
                 <img src="/uploads/{{ product.illustration }}" class="img-fluid" alt="{{ product.name }}"/>
             </div>
             <div class="col-md-6">
-                <small><i><a href="{{ path('app_category', {slug : product.category.slug}) }}">{{ product.category.name }}</a>
-                        > {{ product.name }}</i></small>
+                <small>
+                    <i>
+                        <a href="{{ path('app_category', {slug : product.category.slug}) }}">{{ product.category.name }}</a>
+                        {{ product.name }}
+                    </i>
+                </small>
                 <h1>{{ product.name }}</h1>
-                <span class="d-block">{{ product.price }}</span>
+                <span class="d-block">{{ product.priceWt|price }}</span>
                 <p>{{ product.description|raw }}</p>
-                <button class="btn btn-success w-100">Ajputer au panier </button>
+                <a href="{{ path('app_cart_add', {id: product.id}) }}" class="btn btn-success w-100">Ajouter au
+                    panier</a>
             </div>
         </div>
 
