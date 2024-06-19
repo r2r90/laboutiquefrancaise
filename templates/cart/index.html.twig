@@ -6,14 +6,55 @@
     <div class="container my-5">
         <h1> Mon Panier</h1>
 
-{{ dump(cart) }}
         <div class="row">
             <div class="col-md-8">
                 Liste de mes produits
+                {% for product in cart %}
+                    <div class="row mt-2">
+                        <div class="col-md-2">
+                            <img src="/uploads/{{ product.object.illustration }}" class="img-fluid"
+                                 alt="{{ product.object.name }}">
+                        </div>
+                        <div class="col-md-6">
+                            <strong>
+                                {{ product.object.name }}
+                            </strong>
+                            <span class="d-block small">
+                                Prix unitaire: {{ product.object.priceWt|price }}
+                            </span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="badge text-bg-dark">  x {{ product.qty }}</span>
+                            <a href="{{ path('app_cart_add', {id: product.object.id}) }}" class="btn btn-success ">+</a>
+                            <a href="{{ path('app_cart_decrease', {id: product.object.id}) }}" class="btn btn-success ">-</a>
+
+
+                        </div>
+                        <div class="col-md-2">
+                            {{ (product.qty * product.object.priceWt)|price }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <a href="{{ path('app_cart_remove') }}" class="small d-block mt-3">Vider le panier</a>
             </div>
 
             <div class="col-md-4">
+                <div class="bg-light p-2">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Total produit:</span>
+                        <span>{{ totalCartQty }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <span class="fw-bold">Prix total:</span>
+                        <span>{{ totalPriceWt|price }}</span>
+                    </div>
+                    <div>
+                        <a href="" class="btn btn-success w-100 mt-3">Commander</a>
+                    </div>
+                </div>
                 Récap de mon panier (prix, bouton, commander)
+                prix total
+                btn pour commande
             </div>
         </div>
 

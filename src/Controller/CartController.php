@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classe\Cart;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -15,18 +16,38 @@ class CartController extends AbstractController
     {
         return $this->render('cart/index.html.twig', [
             'cart' => $cart->getCart(),
-        ] );
+            'totalPriceWt' => $cart->getTotalPriceWt()
+        ]);
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart_add')]
-    public function add($id, Cart $cart, ProductRepository $productRepository): Response
+    public function add($id, Cart $cart, ProductRepository $productRepository, Request $request): Response
     {
         $product = $productRepository->findOneById($id);
         $cart->add($product);
         $this->addFlash(
             'success',
-            'Votre compte est correctement ajouté dans votre panier.'
+            'Le produit est correctement ajouté dans votre panier.'
         );
-        return  $this->redirectToRoute('app_product', ['slug' => $product->getSlug()]);
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    #[Route('/cart/decrease/{id}', name: 'app_cart_decrease')]
+    public function decrease($id, Cart $cart,): Response
+    {
+        $cart->decrease($id);
+        $this->addFlash(
+            'success',
+            'Le produit est correctement supprimé de votre panier.'
+        );
+        return $this->redirectToRoute('app_cart');
+    }
+
+    #[Route('/cart/remove/', name: 'app_cart_remove')]
+    public function remove(Cart $cart): Response
+    {
+
+        $cart->remove();
+        return $this->redirectToRoute('app_home');
     }
 }
