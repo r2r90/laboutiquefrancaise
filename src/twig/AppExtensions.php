@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig;
+namespace App\twig;
 
 use App\Classe\Cart;
 use App\Repository\CategoryRepository;

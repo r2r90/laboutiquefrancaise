@@ -40,8 +40,6 @@ class Cart
                 'qty' => 1,
             ];
         }
-
-
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
@@ -59,7 +57,6 @@ class Cart
         } else {
             unset($cart[$id]);
         }
-
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
@@ -85,7 +82,6 @@ class Cart
         foreach ($cart as $product) {
             $qty += $product['qty'];
         }
-
         return $qty;
     }
 
@@ -100,8 +96,6 @@ class Cart
         foreach ($cart as $product) {
             $totalPrice = $totalPrice + $product['object']->getPriceWt() * $product['qty'];
         }
-
-
         return $totalPrice;
     }
 }
